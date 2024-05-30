@@ -1,8 +1,8 @@
-streamlit==1.14.0
+streamlit
 PyMuPDF
 langchain
-sentence-transformers==2.2.2
-chromadb==0.5.0
+sentence-transformers
+chromadb
 langchain_community
-beautifulsoup4==4.10.0
+beautifulsoup4
 pysqlite3-binary==0.5.2.post3

@@ -1,4 +1,4 @@
-langchain_text_splitters 
+langchain-text-splitters 
 streamlit==1.14.0
 PyMuPDF
 langchain==0.0.24

@@ -1,6 +1,7 @@
 streamlit
 PyMuPDF
 langchain
+sentence-transformers
 langchain_community
 beautifulsoup4
 pysqlite3-binary>=0.4.6

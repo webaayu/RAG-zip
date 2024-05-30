@@ -1,7 +1,6 @@
 streamlit==1.14.0
 PyMuPDF
 langchain==0.0.24
-langchain-chroma==0.3.21
 sentence-transformers==2.2.2
 pymilvus-orm==1.0.5
 langchain_community==0.0.1

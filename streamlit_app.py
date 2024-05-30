@@ -3,15 +3,17 @@ import streamlit as st
 import fitz  # PyMuPDF
 import zipfile
 import io
-from langchain_community.llms import Ollama
-from langchain.vectorstores import Chroma
+from langchain.llms import Ollama
 from sentence_transformers import SentenceTransformer
-from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from bs4 import BeautifulSoup
+from pymilvus_orm import connections, Collection
+from pymilvus_orm.default_config import DefaultConfig
+
+# Ensure pysqlite3 is imported and used
 import pysqlite3
 import pysqlite3.dbapi2 as sqlite3
-
 os.environ["SQLITE_LIBRARY_PATH"] = pysqlite3.__file__
 
 # Function to get response from LLM
@@ -100,23 +102,36 @@ def main():
                     )
                     chunks = text_splitter.split_text(combined_text)
 
-                    persist_directory = 'file_embeddings'
-                    vectordb = Chroma.from_documents(documents=chunks, embedding=embeddings, persist_directory=persist_directory)
-                    vectordb.persist()
-                    st.write("Embeddings stored successfully in ChromaDB.")
-                    st.write(f"Persist directory: {persist_directory}")
+                    # Connect to Milvus
+                    connections.connect(
+                        DefaultConfig.HOST, DefaultConfig.PORT
+                    )
 
-                    vectordb = Chroma(persist_directory=persist_directory, embedding_function=embeddings)
-                    st.write(vectordb)
+                    # Create collection
+                    collection_name = "document_collection"
+                    collection = Collection(name=collection_name)
+
+                    # Insert vectors
+                    vectors = [embeddings.encode(chunk) for chunk in chunks]
+                    collection.insert(vectors)
+
+                    st.write("Embeddings stored successfully in Milvus.")
+                    st.write(f"Collection name: {collection_name}")
 
                     if prompt:
-                        docs = vectordb.similarity_search(prompt)
-                        st.write(docs[0])
-                        text = docs[0]
-                        input_prompt = """You are an expert in understanding text contents. You will receive input files and you will have to answer questions based on the input files."""
-                        response = get_llm_response(input_prompt, text, prompt)
-                        st.subheader("Generated Answer:")
-                        st.write(response)
+                        # Search similar vectors
+                        query_vector = embeddings.encode(prompt)
+                        results = collection.search(query_vector)
+
+                        st.write(results)
+                        if results:
+                            text = chunks[results[0].id]  # Assuming results is a list of search results
+                            input_prompt = """You are an expert in understanding text contents. You will receive input files and you will have to answer questions based on the input files."""
+                            response = get_llm_response(input_prompt, text, prompt)
+                            st.subheader("Generated Answer:")
+                            st.write(response)
+                        else:
+                            st.warning("No similar documents found.")
                 except Exception as e:
                     st.error(f"Error occurred during text processing: {e}")
 

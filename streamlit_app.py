@@ -3,8 +3,8 @@ import streamlit as st
 import fitz  # PyMuPDF
 import zipfile
 import io
-from langchain.llms import Ollama
-from langchain.vectorstores import Chroma
+from langchain_community.llms import Ollama
+from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from bs4 import BeautifulSoup

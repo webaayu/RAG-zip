@@ -1,10 +1,10 @@
-pymilvus
-streamlit
+streamlit==1.14.0
 PyMuPDF
-langchain
-sentence-transformers
-pymilvus-orm
-langchain_community
-beautifulsoup4
+langchain==0.0.24
+langchain-chroma==0.3.21
+sentence-transformers==2.2.2
+pymilvus-orm==1.0.5
+langchain_community==0.0.1
+beautifulsoup4==4.10.0
 pysqlite3-binary==0.5.2.post3
 

@@ -3,10 +3,10 @@ import streamlit as st
 import fitz  # PyMuPDF
 import zipfile
 import io
-from langchain.llms import Ollama
+from langchain_community.llms import Ollama
 from chromadb.vectorstores import Chroma
 from sentence_transformers import SentenceTransformer
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from bs4 import BeautifulSoup
 

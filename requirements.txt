@@ -7,5 +7,5 @@ langchain_community==0.0.1
 beautifulsoup4==4.10.0
 pysqlite3-binary==0.5.2.post3
 protobuf==3.20.0 
-grpcio-tools==1.51.3
-
+grpcio==1.42.0 
+grpcio-tools==1.42.0

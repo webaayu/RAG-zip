@@ -9,7 +9,7 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from bs4 import BeautifulSoup
 
-# Ensure pysqlite3 is imported and used
+# Ensure pysqlite3 is imported and used.
 import pysqlite3
 import pysqlite3.dbapi2 as sqlite3
 os.environ["SQLITE_LIBRARY_PATH"] = pysqlite3.__file__

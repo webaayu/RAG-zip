@@ -1,0 +1,6 @@
+streamlit
+PyMuPDF
+langchain
+langchain_community
+beautifulsoup4
+pysqlite3-binary>=0.4.6
